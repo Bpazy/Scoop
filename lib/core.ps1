@@ -455,6 +455,8 @@ function Invoke-ExternalCommand {
 
 function dl($url,$to) {
     $wc = New-Object Net.Webclient
+    $wc = New-Object System.Net.WebClient
+    $wc.Proxy = New-Object System.Net.WebProxy("127.0.0.1:10809")
     $wc.headers.add('Referer', (strip_filename $url))
     $wc.Headers.Add('User-Agent', (Get-UserAgent))
     $wc.downloadFile($url,$to)
