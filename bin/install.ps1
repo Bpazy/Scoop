@@ -27,10 +27,13 @@ if ([System.Enum]::GetNames([System.Net.SecurityProtocolType]) -notcontains 'Tls
     break
 }
 
+$client = New-Object System.Net.WebClient
+$client.Proxy = New-Object System.Net.WebProxy("127.0.0.1:10809")
+
 # get core functions
 $core_url = 'https://raw.githubusercontent.com/ScoopInstaller/Scoop/master/lib/core.ps1'
 Write-Output 'Initializing...'
-Invoke-Expression (new-object net.webclient).downloadstring($core_url)
+Invoke-Expression $client.downloadstring($core_url)
 
 # prep
 if (installed 'scoop') {
